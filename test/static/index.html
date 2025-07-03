@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<script src="mote.bundle.js"></script>
+	</head>
+
+	<body>
+		<script>
+			function Counter() {
+				let c = signal(localStorage.getItem("c") || 0);
+				let btn = css`
+					color: "black";
+					background-color: rgb(41, 41, 41);
+				`
+				let btn_1 = css`
+					color: "black";
+					background-color: rgb(41, 41, 41);
+				`
+				return html`
+					<div>
+						<!--im so confused-->
+						<div>Count: <h${c}>hi</h${c}></div>
+						<button class=${btn}
+							on:click=${() => {
+								c.value++;
+								localStorage.setItem("c", c.value)
+							}}
+						>
+						
+							<p>Click for inc</p>
+						</button>
+						<h1>Mote</h1>
+					</div>
+				`;
+			}
+			
+			document.body.appendChild(Counter());
+		</script>
+	</body>
+</html>
