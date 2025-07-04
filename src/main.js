@@ -23,10 +23,17 @@ self.html = function (strings, ...values) {
 			}
 
 			if (val && typeof val === "object" && "subscribe" in val) {
-				const textNode = document.createTextNode("");
-				val.subscribe((v) => (textNode.textContent = v));
+				const container = document.createElement("span"); 
+				val.subscribe((v) => {
+					container.textContent = ""; 
+					if (v instanceof Node) {
+						container.replaceChildren(v);
+					} else {
+						container.textContent = v;
+					}
+				});
 				const marker = `<!--mote:${markers.length}-->`;
-				markers.push(textNode);
+				markers.push(container);
 				return str + marker;
 			}
 
