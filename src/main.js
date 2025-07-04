@@ -2,12 +2,19 @@ export * from "./css.js";
 
 self.html = function (strings, ...values) {
 	const template = document.createElement("template");
-	// use comment markers to mark areas that would need to be rewritten 
 	const markers = [];
 
 	const htmlString = strings
 		.map((str, i) => {
 			const val = values[i];
+
+			// add component support
+			if (typeof val === "function" && /<\s*$/.test(str)) {
+				const node = val();
+				const marker = `<!--mote:${markers.length}-->`;
+				markers.push(node);
+				return str + marker;
+			}
 
 			if (val instanceof Node) {
 				const marker = `<!--mote:${markers.length}-->`;
@@ -36,8 +43,7 @@ self.html = function (strings, ...values) {
 	template.innerHTML = htmlString;
 	const root = template.content;
 
-
-	// replace the comment markers    
+	// replace the normal ones
 	const walker = document.createTreeWalker(root, NodeFilter.SHOW_COMMENT);
 	while (walker.nextNode()) {
 		const comment = walker.currentNode;
@@ -48,7 +54,7 @@ self.html = function (strings, ...values) {
 		}
 	}
 
-	// replace the other comment markers
+	// replace the onclicks
 	root.querySelectorAll("*").forEach((el) => {
 		for (const attr of [...el.attributes]) {
 			const match = attr.name.match(/^on:([a-z]+)$/);
@@ -65,7 +71,6 @@ self.html = function (strings, ...values) {
 			}
 		}
 	});
-	// probably a bad idea
 	return root.children.length === 1
 		? root.firstElementChild
 		: root.cloneNode(true);
