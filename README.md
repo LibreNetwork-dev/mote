@@ -7,37 +7,37 @@ Mote is a simple library that can do three things. Components, "jsx" (in quotes 
 
 This is an example of a counter that encompasses most mote features     
 ```html
-<html>
-	<head>
+<html>    
+	<head>      
 		<script src="mote.bundle.js"></script>
-	</head>
+	</head>     
 
-	<body>
-		<script>
-			function Counter() {
-				const count = signal(0);
+	<body>    
+		<script>     
+			function Counter() {    
+				const count = signal(0);   
                 
-                let countBtn = css`
-                    background-color: rgb(41, 41, 41);
-                    color: white;
-                    &:hover {
-                        background-color: white;
-                        color: rgb(41, 41, 41);
-                    }
-                `
-				return html`
-					<div>
-						<h1>Count: ${count}</h1>
-						<button 
-                        on:click=${() => count.value++}
-                        class=${countBtn}>
-						increase the number
-						</button>
-					</div>
-				`;
-			}
+                let countBtn = css`   
+                    background-color: rgb(41, 41, 41);   
+                    color: white;   
+                    &:hover {    
+                        background-color: white;     
+                        color: rgb(41, 41, 41);    
+                    }    
+                `    
+				return html`    
+					<div>    
+						<h1>Count: ${count}</h1>     
+						<button       
+                        on:click=${() => count.value++}   
+                        class=${countBtn}>    
+						increase the number     
+						</button>    
+					</div>    
+				`;    
+			}    
 
-			document.body.appendChild(Counter());
+			document.body.appendChild(Counter());   
 		</script>
 	</body>
 </html>
