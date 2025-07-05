@@ -25,19 +25,19 @@ This is an example of a counter that encompasses most mote features
                         color: rgb(41, 41, 41);    
                     }    
                 `    
-				return html`    
-					<div>    
-						<h1>Count: ${count}</h1>     
-						<button       
-                        on:click=${() => count.value++}   
-                        class=${countBtn}>    
-						increase the number     
-						</button>    
-					</div>    
-				`;    
-			}    
+                return html`    
+                    <div>    
+                        <h1>Count: ${count}</h1>     
+                        <button       
+                            on:click=${() => count.value++}   
+                            class=${countBtn}>    
+                            increase the number     
+                        </button>    
+                    </div>    
+                `;    
+            }    
 
-			document.body.appendChild(Counter());   
+            document.body.appendChild(Counter());   
 		</script>
 	</body>
 </html>
