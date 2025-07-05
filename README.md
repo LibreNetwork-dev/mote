@@ -6,7 +6,7 @@
 Mote is a simple library that can do three things. Components, "jsx" (in quotes because it does not act like real jsx), and signals.      
 
 This is an example of a counter that encompasses most mote features     
-```html
+```js
 <html>    
 	<head>      
 		<script src="mote.bundle.js"></script>

@@ -6,7 +6,7 @@ self.html = function (strings, ...values) {
 		.map((str, i) => {
 			const val = values[i];
 
-			// add component support
+			// component
 			if (typeof val === "function" && /<\s*$/.test(str)) {
 				const node = val();
 				const marker = `<!--mote:${markers.length}-->`;
@@ -76,5 +76,5 @@ self.html = function (strings, ...values) {
 			}
 		}
 	});
-	return root.cloneNode(true);
+	return root;
 };
