@@ -76,7 +76,5 @@ self.html = function (strings, ...values) {
 			}
 		}
 	});
-	return root.children.length === 1
-		? root.firstElementChild
-		: root.cloneNode(true);
+	return root.cloneNode(true);
 };
