@@ -13,9 +13,9 @@ This is an example of a counter that encompasses most mote features
 	</head>     
 
 	<body>    
-		<script>     
-			function Counter() {    
-				const count = signal(0);   
+        <script>     
+            function Counter() {    
+                const count = signal(0);   
                 
                 let countBtn = css`   
                     background-color: rgb(41, 41, 41);   
