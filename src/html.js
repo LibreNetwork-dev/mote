@@ -1,3 +1,9 @@
+/*
+	markers work like 
+	_m_   -> A regular dom elm or node
+	_mfn -> A function to be attached 
+
+*/
 self.html = function (strings, ...values) {
 	const template = document.createElement("template");
 	const markers = [];
@@ -6,17 +12,10 @@ self.html = function (strings, ...values) {
 		.map((str, i) => {
 			const val = values[i];
 
-			// component
-			if (typeof val === "function" && /<\s*$/.test(str)) {
+			if (typeof val === "function" && /<\s*$/.test(str) || val instanceof Node) {
 				const node = val();
-				const marker = `<!--mote:${markers.length}-->`;
+				const marker = `<!--_m_:${markers.length}-->`;
 				markers.push(node);
-				return str + marker;
-			}
-
-			if (val instanceof Node) {
-				const marker = `<!--mote:${markers.length}-->`;
-				markers.push(val);
 				return str + marker;
 			}
 
@@ -30,13 +29,13 @@ self.html = function (strings, ...values) {
 						container.textContent = v;
 					}
 				});
-				const marker = `<!--mote:${markers.length}-->`;
+				const marker = `<!--_m_:${markers.length}-->`;
 				markers.push(container);
 				return str + marker;
 			}
 
 			if (typeof val === "function") {
-				const marker = `__fn:${markers.length}__`;
+				const marker = `_mfn:${markers.length}`;
 				markers.push(val);
 				return str + marker;
 			}
@@ -52,7 +51,7 @@ self.html = function (strings, ...values) {
 	const walker = document.createTreeWalker(root, NodeFilter.SHOW_COMMENT);
 	while (walker.nextNode()) {
 		const comment = walker.currentNode;
-		const match = comment.nodeValue.match(/^mote:(\d+)$/);
+		const match = comment.nodeValue.match(/^_m_:(\d+)$/);
 		if (match) {
 			const node = markers[parseInt(match[1])];
 			comment.replaceWith(node);
@@ -67,7 +66,7 @@ self.html = function (strings, ...values) {
 				const event = match[1];
 				const val = attr.value;
 
-				const fnMatch = val.match(/^__fn:(\d+)__$/);
+				const fnMatch = val.match(/^_mfn:(\d+)$/);
 				if (fnMatch) {
 					const handler = markers[parseInt(fnMatch[1])];
 					el.addEventListener(event, handler);

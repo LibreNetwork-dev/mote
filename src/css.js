@@ -2,72 +2,61 @@ self.css = (() => {
 	let id = 0;
 	const styleCache = new Map();
 
-	function processCSS(raw, className) {
-		const lines = raw.split('\n').map(line => line.trim()).filter(Boolean);
+	return (strings, ...values) => {
+		const raw = String.raw(strings, ...values).trim();
+		if (styleCache.has(raw)) return styleCache.get(raw);
+
+		const className = `_m${id++}`;
+		const lines = raw
+			.split("\n")
+			.map((line) => line.trim())
+			.filter(Boolean);
 
 		const topLevelProps = [];
 		const extraBlocks = [];
 
-		let insideBlock = false;
 		let braceDepth = 0;
 		let buffer = [];
 
 		for (let line of lines) {
-			// Replace & and .__class__ in every line
-			line = line.replace(/&/g, `.${className}`).replace(/\.(__class__)\b/g, `.${className}`);
+			// replace & and __class__ with the actual classname
+			line = line.replace(/&|\.__class__\b/g, `.${className}`);
 
-			// Detect start of block
-			if (line.includes('{')) {
+			if (line.includes("{")) {
 				braceDepth += (line.match(/{/g) || []).length;
-				insideBlock = true;
 			}
 
-			if (insideBlock) {
+			if (braceDepth > 0) {
 				buffer.push(line);
 
-				if (line.includes('}')) {
+				if (line.includes("}")) {
 					braceDepth -= (line.match(/}/g) || []).length;
-
 					if (braceDepth === 0) {
-						extraBlocks.push(buffer.join('\n'));
+						extraBlocks.push(buffer.join(""));
 						buffer = [];
-						insideBlock = false;
 					}
 				}
 
 				continue;
 			}
 
-			// Top-level properties
-			if (line && !line.includes('{') && !line.includes('}')) {
+			if (!line.includes("{") && !line.includes("}")) {
 				topLevelProps.push(line);
 			}
 		}
 
-		let result = '';
+		let result = "";
 		if (topLevelProps.length) {
-			result += `.${className} {\n${topLevelProps.join('\n')}\n}\n`;
+  			result += `.${className}{${topLevelProps.join(";")}}`;
 		}
 		if (extraBlocks.length) {
-			result += extraBlocks.join('\n\n') + '\n';
+			result += extraBlocks.join("");
 		}
 
-		return result.trim();
-	}
-
-	return (strings, ...values) => {
-		const raw = String.raw(strings, ...values).trim();
-
-		if (styleCache.has(raw)) {
-		 return styleCache.get(raw);
-		}
-
-		const className = `_m${id++}`;
-		const cssText = processCSS(raw, className);
-
-		const style = document.createElement("style");
-		style.textContent = cssText;
-		document.head.appendChild(style);
+		const style = document.head.appendChild(
+			document.createElement("style")
+		);
+		style.textContent = result.trim();
 
 		styleCache.set(raw, className);
 		return className;

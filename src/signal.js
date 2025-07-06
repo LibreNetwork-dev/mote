@@ -1,7 +1,6 @@
 self.signal = function (initial) {
 	const subscribers = new Set();
-
-	const wrapper = {
+	return {
 		_value: initial,
 		get value() {
 			return this._value;
@@ -15,6 +14,4 @@ self.signal = function (initial) {
 			fn(this._value);
 		},
 	};
-
-	return wrapper;
 };
