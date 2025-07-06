@@ -5,41 +5,30 @@
 # Usage 
 Mote is a simple library that can do three things. Components, "jsx" (in quotes because it does not act like real jsx), and signals.      
 
-This is an example of a counter that encompasses most mote features     
+This is an example that encompasses most of mote's features   
 ```js
-<html>    
-	<head>      
-		<script src="mote.bundle.js"></script>
-	</head>     
-
-	<body>    
-        <script>     
-            function Counter() {    
-                const count = signal(0);   
+function Counter() {    
+    const count = signal(0);   
                 
-                let countBtn = css`   
-                    background-color: rgb(41, 41, 41);   
-                    color: white;   
-                    &:hover {    
-                        background-color: white;     
-                        color: rgb(41, 41, 41);    
-                    }    
-                `    
-                return html`    
-                    <div>    
-                        <h1>Count: ${count}</h1>     
-                        <button       
-                            on:click=${() => count.value++}   
-                            class=${countBtn}>    
-                            increase the number     
-                        </button>    
-                    </div>    
-                `;    
-            }    
+    let countBtn = css`   
+        background-color: rgb(41, 41, 41);   
+        color: white;   
+        &:hover {    
+            background-color: white;     
+            color: rgb(41, 41, 41);    
+        }    
+    `    
+    return html`    
+        <div>    
+            <h1>Count: ${count}</h1>     
+            <button       
+                on:click=${() => count.value++}   
+                class=${countBtn}>    
+                increase the number     
+            </button>    
+        </div>    
+    `;    
+}    
 
-            document.body.appendChild(Counter());   
-		</script>
-	</body>
-</html>
-
+document.body.appendChild(Counter());
 ```
