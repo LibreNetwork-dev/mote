@@ -1,5 +1,5 @@
 # About 
-mote is a minimalist library, meant for speed and size. It is 1.3kb minified and gzipped, and it is 2.3kb minified v    
+mote is a minimalist library, meant for speed and size. It is 1.3kb minified and gzipped, and it is 2.3kb minified       
 its features are css and html templating engines, a signal system, and on:* events 
 
 # Building 
