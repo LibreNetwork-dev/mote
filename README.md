@@ -1,3 +1,7 @@
+# About 
+mote is a minimalist library, meant for speed and size. It is 1.3kb minified and gzipped, and it is 2.3kb minified v    
+its features are css and html templating engines, a signal system, and on:* events 
+
 # Building 
 1. Run npx rspack build
 2. Output is dist/mote.bundle.js
@@ -7,8 +11,9 @@ Mote is a simple library that can do three things. Components, "jsx" (in quotes 
 
 This is an example that encompasses most of mote's features   
 ```js
-function Counter() {    
-    const count = signal(0);   
+// init is a prop
+function Counter(init=0) {    
+    const count = signal(init);   
                 
     let countBtn = css`   
         background-color: rgb(41, 41, 41);   
@@ -22,13 +27,18 @@ function Counter() {
         <div>    
             <h1>Count: ${count}</h1>     
             <button       
-                on:click=${() => count.value++}   
+                on:click=${() => {
+                    count.value++
+                    localStorage.setItem("c", count.value)
+                }}   
                 class=${countBtn}>    
                 increase the number     
             </button>    
         </div>    
     `;    
 }    
-
-document.body.appendChild(Counter());
+// think of the params passed into Counter() as props
+document.body.appendChild(Counter(
+    localStorage.getItem("c") || 0
+    ));
 ```
