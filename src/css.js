@@ -1,6 +1,10 @@
 self.css = (() => {
+	// id gets bumped for a new class
 	let id = 0;
 	const styleCache = new Map();
+
+	const styleTag = document.createElement("style");
+	document.head.appendChild(styleTag);
 
 	return (strings, ...values) => {
 		const raw = String.raw(strings, ...values).trim();
@@ -47,16 +51,13 @@ self.css = (() => {
 
 		let result = "";
 		if (topLevelProps.length) {
-  			result += `.${className}{${topLevelProps.join(";")}}`;
+			result += `.${className}{${topLevelProps.join(";")}}`;
 		}
 		if (extraBlocks.length) {
 			result += extraBlocks.join("");
 		}
 
-		const style = document.head.appendChild(
-			document.createElement("style")
-		);
-		style.textContent = result.trim();
+		styleTag.textContent += result.trim();
 
 		styleCache.set(raw, className);
 		return className;
