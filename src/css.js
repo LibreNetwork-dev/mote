@@ -4,7 +4,7 @@ self.css = (() => {
 	const styleCache = new Map();
 
 	const styleTag = document.createElement("style");
-	document.head.appendChild(styleTag);
+	document.head.append(styleTag);
 
 	return (strings, ...values) => {
 		const raw = String.raw(strings, ...values).trim();
