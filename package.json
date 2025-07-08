@@ -1,12 +1,12 @@
 {
   "name": "mote",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MIT ",
+  "author": "Libre network",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "@rspack/cli": "^1.4.2",
