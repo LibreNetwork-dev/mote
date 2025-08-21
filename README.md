@@ -1,6 +1,6 @@
-# About 
-mote is a minimalist library, meant for speed and size. It is 1.3kb minified and gzipped, and it is 2.3kb minified       
-its features are css and html templating engines, a signal system, and on:* events 
+<h1 align="center">Mote</h1>
+
+Mote is a minimalistic UI library, inspired by JSX. It has **no** virtual dom, and **no** build step. It is 2.6kb minified, which is smaller than preact. It is also super simple, with reactivity being done with signals.
 
 # Building 
 1. Run npx rspack build
@@ -11,9 +11,8 @@ Mote is a simple library that can do three things. Components, "jsx" (in quotes 
 
 This is an example that encompasses most of mote's features   
 ```js
-// init is a prop
-function Counter(init=0) {    
-    const count = signal(init);   
+function Counter() {    
+    const count = signal(0);   
                 
     let countBtn = css`   
         background-color: rgb(41, 41, 41);   
@@ -38,7 +37,7 @@ function Counter(init=0) {
     `;    
 }    
 // think of the params passed into Counter() as props
-document.body.appendChild(Counter(
-    localStorage.getItem("c") || 0
-    ));
+document.body.appendChild(Counter());
 ```
+    
+If you have any questions, join the libre network discord for support.   
